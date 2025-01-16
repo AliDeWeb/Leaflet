@@ -26,7 +26,7 @@ export default function Home() {
 
   React.useEffect(() => {
     MySwal.fire({
-      title: <p>Hello World</p>,
+      title: <p>By continuing browser will access to your current location</p>,
       confirmButtonText: "Continue",
       showCancelButton: true,
       cancelButtonText: "Cancel",
