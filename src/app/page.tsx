@@ -3,9 +3,12 @@
 import React from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import { Icon } from "leaflet";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("../components/Map"), {
+  ssr: false,
+  loading: () => <p>Loading map...</p>,
+});
 
 const MySwal = withReactContent(Swal);
 
@@ -17,11 +20,6 @@ export default function Home() {
   }>({
     x: 0,
     y: 0,
-  });
-
-  const customIcon = new Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/14831/14831599.png",
-    iconSize: [38, 38],
   });
 
   React.useEffect(() => {
@@ -39,7 +37,6 @@ export default function Home() {
       navigator.geolocation.watchPosition(
         (position) => {
           const { longitude, latitude } = position.coords;
-
           setLocation({ x: latitude, y: longitude });
         },
         (err) => {
@@ -54,28 +51,9 @@ export default function Home() {
     });
   }, []);
 
-  React.useEffect(() => {
-    console.log(location);
-  }, [location]);
-
   return (
     <div className="h-dvh items-center justify-center flex text-3xl text-white">
-      {access ? (
-        <MapContainer
-          center={[36.2688, 50.0041]}
-          zoom={13}
-          style={{ height: "100vh", width: "100%" }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-
-          <Marker position={[location.x, location.y]} icon={customIcon} />
-        </MapContainer>
-      ) : (
-        <p>Not Allowed</p>
-      )}
+      {access ? <Map location={location} /> : <p>Not Allowed</p>}
     </div>
   );
 }
