@@ -16,7 +16,7 @@ const ChangeMapView: React.FC<MapProps> = ({ location }) => {
 
   React.useEffect(() => {
     if (location.x !== 0 && location.y !== 0) {
-      map.setView([location.x, location.y], 13);
+      map.setView([location.x, location.y]);
     }
   }, [location, map]);
 
