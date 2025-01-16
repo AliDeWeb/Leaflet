@@ -1,4 +1,3 @@
-// components/Map.tsx
 import React from "react";
 import { Icon } from "leaflet";
 import { MapContainer, TileLayer, Marker, useMap, Popup } from "react-leaflet";
