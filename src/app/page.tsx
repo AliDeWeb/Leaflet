@@ -44,7 +44,7 @@ export default function Home() {
         },
         {
           maximumAge: 0,
-          timeout: 6000,
+          timeout: 60 * 1000,
           enableHighAccuracy: true,
         }
       );
